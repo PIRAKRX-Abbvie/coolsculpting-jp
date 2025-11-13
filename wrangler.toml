@@ -1,0 +1,14 @@
+name = "coolsculpting-jp"
+compatibility_date = "2024-11-13"
+
+# Pages configuration
+pages_build_output_dir = "src"
+
+# You can also specify these in the Pages dashboard
+# [env.production]
+# [env.production.vars]
+# API_KEY = "your-api-key"
+
+# [env.preview]
+# [env.preview.vars]
+# API_KEY = "your-preview-api-key"
