@@ -1,0 +1,55 @@
+#!/bin/bash
+
+site=${1/.com/}
+partUrl="www.$1"
+fullUrl="https://$partUrl"
+fullUrlEsc="https:\/\/$partUrl"
+fastFontsFind='\/\/fast.fonts'
+fastFontsReplace='https:\/\/fast.fonts'
+addedByHTTrack='Added by HTTrack'
+mirroredFrom='Mirrored from'
+
+echo "* * * * Running mirror script * * * *"
+echo "----- START SSG for: $site -----"
+
+echo "----- START mirroring live site -----"
+
+echo "Run httrack"
+httrack "$fullUrl/" -O "" "+*.$1/*" -v
+
+echo "Pulling down sitemap and robots"
+curl $fullUrl/sitemap.xml -o src/sitemap.xml
+curl $fullUrl/robots.txt -o src/robots.txt
+
+echo "httrack cleanup"
+rm -r backblue.gif fade.gif index.html hts-cache cookies.txt $partUrl/www.$site.html
+
+echo "Moving httrack files into src"
+mv $partUrl/* src
+
+echo "----- END mirroring live site -----"
+
+echo "----- START code cleanup -----"
+
+echo "Clean up fast.fonts references"
+find src -name "*.html" | xargs sed -i.bak1 "s/http:$fastFontsFind/$fastFontsReplace/g;s/\"$fastFontsFind/\"$fastFontsReplace/g"
+find src -name "*.css" | xargs sed -i.bak11 "s/\"\/dv2/\"$fastFontsReplace.net\/dv2/g"
+
+echo "Remove code added by httrack"
+find src -name "*.html" | xargs sed -i.bak2 "/$addedByHTTrack/d;/$mirroredFrom/d"
+
+echo "Clean up paths"
+# TODO - Regex pending -- internal links
+find src -name "*.html" | xargs sed -i.bak3 "s/www.$site.html/index.html/g"
+find src -name "*.html" | xargs sed -i.bak31 -E "s/<link rel=\"(dns-prefetch|preconnect|canonical)\" href=\"(.+).html\">/<link rel=\"\1\" href=\"$fullUrlEsc\/\2\">/"
+find src -name "*.html" | xargs sed -i.bak32 "s/$fullUrlEsc\/index.html/$fullUrlEsc\//g"
+find src -name "*.html" | xargs sed -i.bak33 -E "s/alternate' href = '(.+).html'/alternate' href = '$fullUrlEsc\/\1'/g"
+find src -name "*.html" | xargs sed -i.bak34 "s/$fullUrlEsc\/index/$fullUrlEsc\//g"
+find src -name "*.html" | xargs sed -i.bak35 "s/href=\"index.html\"/href=\"\/\"/g"
+echo "----- END code cleanup -----"
+
+# echo "Clean up + Remove backup files"
+find src -type f -name '*.html.bak**' -delete
+rm -r $partUrl
+
+echo "----- END SSG for: $site -----"

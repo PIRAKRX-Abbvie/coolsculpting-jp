@@ -1,0 +1,23 @@
+{
+  "name": "netlify-migration-starter",
+  "version": "3.0.0",
+  "description": "Netlify migration sites",
+  "scripts": {
+    "start": "cd src && http-serve --proxy http://127.0.0.1:8080/index.html",
+    "build": "cp _headers src && cp _redirects src",
+    "api": "netlify dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:venture-moonwalker/aaaem/netlify-migration-starter.git"
+  },
+  "author": "AAAEM",
+  "license": "ISC",
+  "dependencies": {
+    "http-proxy-middleware": "2.0.6",
+    "http-serve": "1.0.1"
+  },
+  "devDependencies": {
+    "netlify-cli": "^15.10.0"
+  }
+}

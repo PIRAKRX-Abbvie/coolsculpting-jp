@@ -1,0 +1,26 @@
+[Settings]
+  ID = "{Project}"
+
+[build]
+  functions = "functions/"
+  publish = "src"
+  command = "npm run build"
+
+[dev]
+  publish = "src"
+  port = 8004
+  staticServerPort = 3004
+  functionsPort = 65000
+
+[[redirects]]
+  from = "/"
+  to = "/hcp"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hcp"
+  to = "/index.html"
+  status = 200
+  force = true
+
