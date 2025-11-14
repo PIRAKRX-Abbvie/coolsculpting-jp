@@ -1,14 +1,19 @@
+# name = "coolsculpting-jp"
+# compatibility_date = "2024-11-13"
+# pages_build_output_dir = "src"
+
 name = "coolsculpting-jp"
 compatibility_date = "2024-11-13"
+pages_build_output_dir = "src"  # or your build output directory
 
-# Pages configuration
-pages_build_output_dir = "src"
+[env]
+name = "coolsculpting-jp"
+route = "coolsculpting-jp.pages.dev"
 
-# You can also specify these in the Pages dashboard
-# [env.production]
-# [env.production.vars]
-# API_KEY = "your-api-key"
+[env.dev]
+name = "coolsculpting-jp-dev"
+route = "dev.coolsculpting-jp.pages.dev"
 
-# [env.preview]
-# [env.preview.vars]
-# API_KEY = "your-preview-api-key"
+[env.prod]
+name = "coolsculpting-jp-staging"
+route = "prod.coolsculpting-jp.pages.dev"
