@@ -1,19 +1,4 @@
-# name = "coolsculpting-jp"
-# compatibility_date = "2024-11-13"
-# pages_build_output_dir = "src"
-
 name = "coolsculpting-jp"
 compatibility_date = "2024-11-13"
-pages_build_output_dir = "src"  # or your build output directory
+pages_build_output_dir = "src"
 
-[env]
-name = "coolsculpting-jp"
-route = "coolsculpting-jp.pages.dev"
-
-[env.dev]
-name = "coolsculpting-jp-dev"
-route = "dev.coolsculpting-jp.pages.dev"
-
-[env.prod]
-name = "coolsculpting-jp-staging"
-route = "prod.coolsculpting-jp.pages.dev"
